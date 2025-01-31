@@ -1,5 +1,6 @@
-const flickrApiKey = process.env.NEXT_PUBLIC_FLICKR_API_KEY;
-const flickrGroupId = process.env.NEXT_PUBLIC_FLICKR_GROUP_ID;
+const flickrApiKey = window.ENV?.NEXT_PUBLIC_FLICKR_API_KEY;
+const flickrGroupId = window.ENV?.NEXT_PUBLIC_FLICKR_GROUP_ID;
+
 
 
 // Función para obtener una foto aleatoria
