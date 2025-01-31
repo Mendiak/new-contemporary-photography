@@ -1,0 +1,80 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #222, #666);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+  text-align: center;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  width: 800px;
+}
+
+/* Títulos */
+h1 {
+  font-size: 24px;
+  color: #444;
+}
+
+h2 {
+  font-size: 20px;
+  color: #555;
+}
+
+/* Información de la foto */
+#photo-info {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+/* Botón */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #252525;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #9b9b9b;
+}
+
+/* Imagen con transiciones de fade */
+img {
+  max-width: 100%;
+  max-height: 600px;
+  border-radius: 3px;
+  margin-top: 15px;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+/* Clases de animación */
+.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-out {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-in {
+  opacity: 1;
+  transform: scale(1);
+}
