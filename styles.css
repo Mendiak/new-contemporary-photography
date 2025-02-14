@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #222, #666);
+  background: lightgrey;
   color: #333;
   margin: 0;
   padding: 0;
@@ -13,13 +13,15 @@ body {
 
 /* Contenedor principal */
 .container {
+  margin: 15px;
   text-align: center;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  width: 800px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
 }
+
 
 /* Títulos */
 h1 {
@@ -28,7 +30,7 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 12px;
   color: #555;
 }
 
@@ -42,8 +44,8 @@ h2 {
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #252525;
-  color: white;
+  background-color: #585858;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -51,17 +53,35 @@ button {
 }
 
 button:hover {
-  background-color: #9b9b9b;
+  background-color: #000000;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+a:hover {
+  text-decoration: underline;
+} 
+
+a:visited {
+  color: #a0a0a0;
 }
 
 /* Imagen con transiciones de fade */
 img {
   max-width: 100%;
-  max-height: 600px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
   border-radius: 3px;
-  margin-top: 15px;
+  margin: 50px;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
 }
+
 
 /* Clases de animación */
 .hidden {
