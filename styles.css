@@ -13,13 +13,18 @@ body {
 
 /* Contenedor principal */
 .container {
+  padding: 20px;
   margin: 15px;
   text-align: center;
   background-color: white;
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
+  min-height: 600px; 
+  width: 800px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
@@ -32,12 +37,18 @@ h1 {
 h2 {
   font-size: 12px;
   color: #555;
+
 }
 
 /* Información de la foto */
+#info {
+  text-align: left;
+}
+
 #photo-info {
   font-size: 14px;
   margin: 10px 0;
+
 }
 
 /* Botón */
@@ -75,10 +86,12 @@ img {
   max-height: 400px;
   width: auto;
   height: auto;
-
+  min-height: 600px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   object-fit: contain;
   border-radius: 3px;
-  margin: 50px;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
 }
 
@@ -97,4 +110,35 @@ img {
 .fade-in {
   opacity: 1;
   transform: scale(1);
+}
+
+
+/* Add these media queries at the end of your styles.css */
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 90vw;
+    min-height: 500px;
+  }
+  
+  img {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    min-height: 400px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    min-height: 300px;
+  }
+  
+  h1 {
+    font-size: 20px;
+  }
 }
