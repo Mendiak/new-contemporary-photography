@@ -1,4 +1,4 @@
-/* Estilos generales */
+/* General styles */
 body {
   font-family: Arial, sans-serif;
   background: lightgrey;
@@ -11,47 +11,42 @@ body {
   height: 100vh;
 }
 
-/* Contenedor principal */
+/* Main container */
 .container {
-  padding: 20px;
-  margin: 15px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
   min-height: 600px; 
-  width: 800px; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 800px;
+  margin: 15px;
+  padding: 20px 5%;
+  box-sizing: border-box;
 }
 
-
-/* Títulos */
+/* Typography */
 h1 {
   font-size: 24px;
-  color: #444;
 }
 
 h2 {
   font-size: 12px;
-  color: #555;
-
 }
 
-/* Información de la foto */
 #info {
+  font-family: "IBM Plex Mono", serif;
   text-align: left;
 }
 
 #photo-info {
   font-size: 14px;
   margin: 10px 0;
-
 }
 
-/* Botón */
+/* Interactive elements */
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -61,12 +56,19 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  font-family: "IBM Plex Mono", serif;
 }
 
 button:hover {
   background-color: #000000;
 }
 
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Links */
 a {
   text-decoration: none;
   color: #000000;
@@ -80,23 +82,23 @@ a:visited {
   color: #a0a0a0;
 }
 
-/* Imagen con transiciones de fade */
+/* Image styles and transitions */
 img {
   max-width: 100%;
   max-height: 400px;
-  width: auto;
+  width: 90%;
   height: auto;
-  min-height: 600px; 
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
   object-fit: contain;
   border-radius: 3px;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  margin: 20px auto;
 }
 
-
-/* Clases de animación */
+/* Animation classes */
 .hidden {
   opacity: 0;
   transform: scale(0.95);
@@ -112,8 +114,7 @@ img {
   transform: scale(1);
 }
 
-
-/* Add these media queries at the end of your styles.css */
+/* Responsive design */
 @media screen and (max-width: 1024px) {
   .container {
     width: 90vw;
@@ -130,6 +131,11 @@ img {
 @media screen and (max-width: 768px) {
   .container {
     min-height: 400px;
+    padding: 20px 15px;
+  }
+
+  img {
+    width: 100%;
   }
 }
 
