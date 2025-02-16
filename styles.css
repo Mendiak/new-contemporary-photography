@@ -17,7 +17,7 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
   min-height: 600px; 
@@ -39,17 +39,17 @@ h2 {
 #info {
   font-family: "IBM Plex Mono", serif;
   text-align: left;
+  margin-bottom: 15px;
 }
 
 #photo-info {
-  font-size: 14px;
-  margin: 10px 0;
+  font-size: 12px;
 }
 
 /* Interactive elements */
 button {
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 12px;
   background-color: #585858;
   color: rgb(255, 255, 255);
   border: none;
@@ -93,9 +93,8 @@ img {
   flex-direction: column;
   align-items: center;
   object-fit: contain;
-  border-radius: 3px;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-  margin: 20px auto;
+
 }
 
 /* Animation classes */

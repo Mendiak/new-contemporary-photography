@@ -85,7 +85,7 @@ function showNewPhoto(imgElement, photoUrl, photo) {
 
   const photoContainer = document.getElementById('photo-info');
   photoContainer.innerHTML = `
-    <p><strong>Author:</strong> <a href="${flickrPhotoUrl}" target="_blank">${photo.ownername}</a></p>
+    <p><strong>Author:</strong> <a href="${flickrPhotoUrl}" target="_blank">${photo.ownername} <i class="bi bi-box-arrow-up-right"></i></a></p>
   `;
 
   // Start with the image hidden
