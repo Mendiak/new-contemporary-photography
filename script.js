@@ -2,6 +2,7 @@ const flickrApiKey = window.ENV?.NEXT_PUBLIC_FLICKR_API_KEY;
 const flickrGroupId = window.ENV?.NEXT_PUBLIC_FLICKR_GROUP_ID;
 
 // Function to get a random photo
+// Function to get a random photo
 async function getRandomPhoto() {
   console.log("⏳ Requesting a new photo...");
 
@@ -64,18 +65,20 @@ async function getRandomPhoto() {
           showNewPhoto(newImg, photoUrl, photo);
         }
       } else {
-        console.warn("⚠️ No photos found.");
-        document.getElementById('photo-info').innerHTML = "No photos found.";
+        console.warn("⚠️ No photos found. Retrying...");
+        // Si no se encuentra foto, se reintenta la llamada
+        setTimeout(getRandomPhoto, 2000);
       }
     } else {
-      console.warn("⚠️ Unable to retrieve the total number of pages.");
-      document.getElementById('photo-info').innerHTML = "Unable to retrieve the total number of pages.";
+      console.warn("⚠️ Unable to retrieve the total number of pages. Retrying...");
+      setTimeout(getRandomPhoto, 2000);
     }
   } catch (error) {
-    console.error("❌ Error retrieving the photo:", error.message);
-    document.getElementById('photo-info').innerHTML = `Error retrieving the photo: ${error.message}`;
+    console.error("❌ Error retrieving the photo:", error.message, " Retrying...");
+    setTimeout(getRandomPhoto, 2000);
   }
 }
+
 
 // Helper function to display the new image with fade-in effect
 function showNewPhoto(imgElement, photoUrl, photo) {
