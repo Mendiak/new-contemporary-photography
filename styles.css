@@ -147,3 +147,59 @@ img {
     font-size: 20px;
   }
 }
+
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .container {
+  background-color: #1e1e1e;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode p,
+body.dark-mode a {
+  color: #e0e0e0;
+}
+
+body.dark-mode a {
+  color: #bb86fc;
+}
+
+body.dark-mode a:visited {
+  color: #8c54a9;
+}
+
+body.dark-mode button {
+  background-color: #333333;
+  color: #e0e0e0;
+}
+
+body.dark-mode button:hover {
+  background-color: #555555;
+}
+
+/* Positioning the dark mode toggle icon */
+#toggle-dark-mode {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #f0f0f0; /* Light mode background color */
+  border: none;
+  padding: 5px;
+  font-size: 24px;
+  z-index: 1000;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 0.3s ease-in-out;
+}
+
+body.dark-mode #toggle-dark-mode {
+  background: #333333; /* Dark mode background color */
+  color: #ffffff;
+}

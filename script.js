@@ -110,3 +110,14 @@ window.onload = () => {
 
 // Event listener for the button
 document.getElementById('load-photo').addEventListener('click', getRandomPhoto);
+
+// Dark mode toggle functionality with icon swap
+const toggleButton = document.getElementById('toggle-dark-mode');
+toggleButton.addEventListener('click', function() {
+  document.body.classList.toggle('dark-mode');
+  if (document.body.classList.contains('dark-mode')) {
+    toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
+  } else {
+    toggleButton.innerHTML = '<i class="bi bi-moon"></i>';
+  }
+});
