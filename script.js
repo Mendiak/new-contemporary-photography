@@ -3,8 +3,14 @@ const flickrGroupId = window.ENV?.NEXT_PUBLIC_FLICKR_GROUP_ID;
 
 // Function to get a random photo
 // Function to get a random photo
+// Modificar la función getRandomPhoto para añadir y quitar la clase loading
 async function getRandomPhoto() {
   console.log("⏳ Requesting a new photo...");
+  
+  // Añadir clase loading al botón
+  const loadButton = document.getElementById('load-photo');
+  loadButton.classList.add('loading');
+  loadButton.disabled = true;
 
   try {
     const responsePages = await axios.get('https://api.flickr.com/services/rest/', {
@@ -43,9 +49,16 @@ async function getRandomPhoto() {
         console.log(`📸 Selected photo: ${photo.title} (${photoUrl})`);
 
         const newImg = document.createElement('img');
-        newImg.src = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_c.jpg`;
+        newImg.src = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
         newImg.alt = photo.title;
         newImg.classList.add("hidden"); // Initially hide the image
+        
+        // Añadir evento para cuando la imagen termine de cargar
+        newImg.onload = function() {
+          // Quitar clase loading del botón cuando la imagen esté lista
+          loadButton.classList.remove('loading');
+          loadButton.disabled = false;
+        };
 
         const photoContainer = document.getElementById('photo-info');
         const currentImg = photoContainer.querySelector('img');
@@ -72,12 +85,19 @@ async function getRandomPhoto() {
     } else {
       console.warn("⚠️ Unable to retrieve the total number of pages. Retrying...");
       setTimeout(getRandomPhoto, 2000);
+      // Quitar clase loading en caso de error
+      loadButton.classList.remove('loading');
+      loadButton.disabled = false;
     }
   } catch (error) {
     console.error("❌ Error retrieving the photo:", error.message, " Retrying...");
     setTimeout(getRandomPhoto, 2000);
+    // Quitar clase loading en caso de error
+    loadButton.classList.remove('loading');
+    loadButton.disabled = false;
   }
 }
+
 
 
 // Helper function to display the new image with fade-in effect

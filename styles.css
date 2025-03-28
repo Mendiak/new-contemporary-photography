@@ -157,7 +157,7 @@ body.dark-mode {
 
 body.dark-mode .container {
   background-color: #1e1e1e;
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0);
 }
 
 body.dark-mode h1,
@@ -187,9 +187,10 @@ body.dark-mode button:hover {
 /* Positioning the dark mode toggle icon */
 #toggle-dark-mode {
   position: fixed;
+  width: 50px;
   top: 20px;
   right: 20px;
-  background: #f0f0f0; /* Light mode background color */
+  background: #f0f0f0; 
   border: none;
   padding: 5px;
   font-size: 24px;
@@ -203,3 +204,26 @@ body.dark-mode #toggle-dark-mode {
   background: #333333; /* Dark mode background color */
   color: #ffffff;
 }
+
+
+/* Añadir al final del archivo styles.css */
+button.loading {
+  background-color: #a0a0a0;
+  cursor: wait;
+  position: relative;
+}
+
+button.loading i {
+  display: none;
+}
+
+button.loading::after {
+  content: "Loading...";
+  margin-left: 5px;
+}
+
+body.dark-mode button.loading {
+  background-color: #444444;
+}
+
+
