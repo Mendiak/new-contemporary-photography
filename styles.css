@@ -1,8 +1,32 @@
+/* CSS Variables */
+:root {
+  --font-primary: "IBM Plex Mono", monospace;
+  --font-fallback: Arial, sans-serif;
+
+  /* Light Mode Colors */
+  --bg-color: lightgrey;
+  --container-bg-color: white;
+  --text-color: #333;
+  --link-color: #000000;
+  --link-visited-color: #a0a0a0;
+  --button-bg-color: #585858;
+  --button-text-color: white;
+  --button-hover-bg-color: #000000;
+  --footer-text-color: #666;
+  --toggle-bg-color: #f0f0f0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Global box-sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* General styles */
 body {
-  font-family: Arial, sans-serif;
-  background: lightgrey;
-  color: #333;
+  font-family: var(--font-fallback);
+  background: var(--bg-color);
+  color: var(--text-color);
   margin: 0;
   padding: 0;
   display: flex;
@@ -12,19 +36,18 @@ body {
 }
 
 /* Main container */
-.container {
+main.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  background-color: var(--container-bg-color);
   border-radius: 5px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px var(--shadow-color);
   transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
   min-height: 600px; 
   width: 800px;
   margin: 15px;
   padding: 20px 5%;
-  box-sizing: border-box;
 }
 
 /* Typography */
@@ -36,8 +59,8 @@ h2 {
   font-size: 12px;
 }
 
-#info {
-  font-family: "IBM Plex Mono", serif;
+header#info {
+  font-family: var(--font-primary);
   text-align: left;
   margin-bottom: 15px;
 }
@@ -50,13 +73,13 @@ h2 {
 button {
   padding: 10px 20px;
   font-size: 12px;
-  background-color: #585858;
-  color: rgb(255, 255, 255);
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  font-family: "IBM Plex Mono", serif;
+  font-family: var(--font-primary);
 }
 
 button:hover {
@@ -71,7 +94,7 @@ button:disabled {
 /* Links */
 a {
   text-decoration: none;
-  color: #000000;
+  color: var(--link-color);
 }
 
 a:hover {
@@ -79,7 +102,7 @@ a:hover {
 } 
 
 a:visited {
-  color: #a0a0a0;
+  color: var(--link-visited-color);
 }
 
 /* Image styles and transitions */
@@ -87,8 +110,6 @@ img {
   max-width: 100%;
   max-height: 400px;
   width: 90%;
-  height: auto;
-  min-height: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,9 +134,22 @@ img {
   transform: scale(1);
 }
 
+/* Portfolio Link */
+footer.portfolio-link {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 12px;
+  text-align: center;
+  font-family: var(--font-primary);
+}
+footer.portfolio-link p {
+  margin: 0;
+  color: var(--footer-text-color);
+}
+
 /* Responsive design */
 @media screen and (max-width: 1024px) {
-  .container {
+  main.container {
     width: 90vw;
     min-height: 500px;
   }
@@ -128,7 +162,7 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  .container {
+  main.container {
     min-height: 400px;
     padding: 20px 15px;
   }
@@ -139,7 +173,7 @@ img {
 }
 
 @media screen and (max-width: 480px) {
-  .container {
+  main.container {
     min-height: 300px;
   }
   
@@ -151,37 +185,30 @@ img {
 
 /* Dark Mode Styles */
 body.dark-mode {
-  background: #121212;
-  color: #e0e0e0;
+  --bg-color: #121212;
+  --container-bg-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --link-color: #bb86fc;
+  --link-visited-color: #8c54a9;
+  --button-bg-color: #333333;
+  --button-text-color: #e0e0e0;
+  --button-hover-bg-color: #555555;
+  --footer-text-color: #a0a0a0;
+  --toggle-bg-color: #333333;
+  --shadow-color: rgba(255, 255, 255, 0);
 }
 
-body.dark-mode .container {
-  background-color: #1e1e1e;
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0);
-}
-
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode p,
-body.dark-mode a {
-  color: #e0e0e0;
-}
-
-body.dark-mode a {
-  color: #bb86fc;
+/* This rule is needed because the base 'a' color is overridden by the general text color in dark mode */
+body.dark-mode a, body.dark-mode a:visited {
+  color: var(--link-color);
 }
 
 body.dark-mode a:visited {
-  color: #8c54a9;
+  color: var(--link-visited-color);
 }
 
-body.dark-mode button {
-  background-color: #333333;
-  color: #e0e0e0;
-}
-
-body.dark-mode button:hover {
-  background-color: #555555;
+body.dark-mode #toggle-dark-mode {
+  color: #ffffff;
 }
 
 /* Positioning the dark mode toggle icon */
@@ -190,7 +217,7 @@ body.dark-mode button:hover {
   width: 50px;
   top: 20px;
   right: 20px;
-  background: #f0f0f0; 
+  background: var(--toggle-bg-color); 
   border: none;
   padding: 5px;
   font-size: 24px;
@@ -199,12 +226,6 @@ body.dark-mode button:hover {
   color: inherit;
   transition: background-color 0.3s ease-in-out;
 }
-
-body.dark-mode #toggle-dark-mode {
-  background: #333333; /* Dark mode background color */
-  color: #ffffff;
-}
-
 
 /* Añadir al final del archivo styles.css */
 button.loading {
@@ -225,5 +246,3 @@ button.loading::after {
 body.dark-mode button.loading {
   background-color: #444444;
 }
-
-
