@@ -1,99 +1,115 @@
 const flickrApiKey = window.ENV?.NEXT_PUBLIC_FLICKR_API_KEY;
 const flickrGroupId = window.ENV?.NEXT_PUBLIC_FLICKR_GROUP_ID;
+const loadButton = document.getElementById('load-photo');
 
+// Create a reusable Axios instance for the Flickr API to avoid repeating parameters.
+const flickrApi = axios.create({
+  baseURL: 'https://api.flickr.com/services/rest/',
+  params: {
+    method: 'flickr.groups.pools.getPhotos',
+    api_key: flickrApiKey,
+    group_id: flickrGroupId,
+    format: 'json',
+    nojsoncallback: 1,
+  }
+});
 // Function to get a random photo
 async function getRandomPhoto() {
   console.log("⏳ Requesting a new photo...");
-  
-  // Add loading class to the button
-  const loadButton = document.getElementById('load-photo');
+
+  // Disable button at the start of the request
   loadButton.classList.add('loading');
   loadButton.disabled = true;
 
   try {
-    const responsePages = await axios.get('https://api.flickr.com/services/rest/', {
+    // Step 1: Get the total number of pages to determine a random page
+    // We only need 1 photo per page to get the total page count. This is more efficient.
+    const responsePages = await flickrApi.get('', {
+      params: { per_page: 1 }
+    });
+    
+    // Explicitly check for a failed API status from Flickr.
+    if (responsePages.data.stat !== 'ok') {
+      // Log the specific error message from Flickr to help with debugging.
+      console.error("🔴 Flickr API returned an error:", responsePages.data);
+      // Throw a more specific error to be caught below.
+      throw new Error(`Flickr API Error: ${responsePages.data.message} (Code: ${responsePages.data.code})`);
+    }
+
+    const totalPages = responsePages.data.photos.pages;
+    const randomPage = Math.floor(Math.random() * totalPages) + 1;
+    console.log(`📄 Total pages: ${totalPages}, randomly selecting page: ${randomPage}`);
+
+    // Step 2: Get a photo from the randomly selected page
+    const responsePhoto = await flickrApi.get('', {
       params: {
-        method: 'flickr.groups.pools.getPhotos',
-        api_key: flickrApiKey,
-        group_id: flickrGroupId,
-        format: 'json',
-        nojsoncallback: 1,
         per_page: 1,
-        page: 1,
+        page: randomPage,
+        extras: 'owner_name'
       }
     });
 
-    if (responsePages.data.stat === 'ok' && responsePages.data.photos.pages > 0) {
-      const totalPages = responsePages.data.photos.pages;
-      const randomPage = Math.floor(Math.random() * totalPages) + 1;
-      console.log(`📄 Total pages: ${totalPages}, randomly selecting page: ${randomPage}`);
+    if (responsePhoto.data.stat !== 'ok' || responsePhoto.data.photos.photo.length === 0) {
+      console.warn("⚠️ No photo found on the selected page. Retrying...");
+      throw new Error("No photo found on page."); // Force retry via catch block
+    }
 
-      const responsePhoto = await axios.get('https://api.flickr.com/services/rest/', {
-        params: {
-          method: 'flickr.groups.pools.getPhotos',
-          api_key: flickrApiKey,
-          group_id: flickrGroupId,
-          format: 'json',
-          nojsoncallback: 1,
-          per_page: 1,
-          page: randomPage,
-          extras: 'owner_name'
-        }
-      });
+    const photo = responsePhoto.data.photos.photo[0];
+    const photoUrl = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
+    console.log(`📸 Selected photo: ${photo.title} (${photoUrl})`);
 
-      if (responsePhoto.data.stat === 'ok' && responsePhoto.data.photos.photo.length > 0) {
-        const photo = responsePhoto.data.photos.photo[0];
-        const photoUrl = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
-        console.log(`📸 Selected photo: ${photo.title} (${photoUrl})`);
+    const newImg = document.createElement('img');
+    newImg.src = photoUrl;
+    newImg.alt = photo.title;
+    newImg.classList.add("hidden"); // Initially hide the image
 
-        const newImg = document.createElement('img');
-        newImg.src = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`;
-        newImg.alt = photo.title;
-        newImg.classList.add("hidden"); // Initially hide the image
-        
-        // Add an event for when the image finishes loading
-        newImg.onload = function() {
-          // Remove loading class from the button when the image is ready
-          loadButton.classList.remove('loading');
-          loadButton.disabled = false;
-        };
+    // The 'onload' event will handle re-enabling the button and showing the image.
+    // This prevents the button from being enabled before the image is ready.
+    newImg.onload = () => {
+      const photoContainer = document.getElementById('photo-info');
+      const currentImg = photoContainer.querySelector('img');
 
-        const photoContainer = document.getElementById('photo-info');
-        const currentImg = photoContainer.querySelector('img');
+      if (currentImg) {
+        console.log("🔄 Applying fade-out to the current image...");
+        currentImg.classList.remove("fade-in");
+        currentImg.classList.add("fade-out");
 
-        if (currentImg) {
-          console.log("🔄 Applying fade-out to the current image...");
-          currentImg.classList.remove("fade-in");
-          currentImg.classList.add("fade-out");
-
-          // Wait for the fade-out to finish
-          currentImg.addEventListener('transitionend', function handler() {
-            currentImg.removeEventListener('transitionend', handler);
-            currentImg.remove();
-            revealContent(); // Ensure content is visible
-            showNewPhoto(newImg, photoUrl, photo);
-          });
-        } else {
-          showNewPhoto(newImg, photoUrl, photo);
-        }
+        // Wait for the fade-out to finish before showing the new image
+        currentImg.addEventListener('transitionend', () => {
+          currentImg.remove();
+          showNewPhoto(newImg, photo);
+        }, { once: true }); // Use { once: true } for automatic cleanup
       } else {
-        console.warn("⚠️ No photos found. Retrying...");
-        // If no photo is found, retry the call
-        setTimeout(getRandomPhoto, 2000);
+        showNewPhoto(newImg, photo);
       }
-    } else {
-      console.warn("⚠️ Unable to retrieve the total number of pages. Retrying...");
-      setTimeout(getRandomPhoto, 2000);
-      // Remove loading class in case of error
+      // Re-enable the button only when the new image is fully loaded and ready to be shown.
       loadButton.classList.remove('loading');
       loadButton.disabled = false;
-    }
+    };
+
+    newImg.onerror = () => {
+      console.error("❌ Error loading the image file. Retrying...");
+      setTimeout(getRandomPhoto, 2000);
+    };
+
   } catch (error) {
-    console.error("❌ Error retrieving the photo:", error.message, " Retrying...");
-    setTimeout(getRandomPhoto, 2000);
-    // Remove loading class in case of error
+    console.error("❌ Error during API request. Retrying in 2 seconds...");
+    // Log the detailed error from Axios/Flickr to see the real problem
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx. This is the most likely case.
+      console.error("Flickr API Response Error:", error.response.data);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received from Flickr:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Axios setup error:", error.message);
+    }
+    // If anything fails, re-enable the button and try again after a delay.
     loadButton.classList.remove('loading');
     loadButton.disabled = false;
+    setTimeout(getRandomPhoto, 2000);
   }
 }
 
@@ -110,66 +126,74 @@ function revealContent() {
 
 
 // Helper function to display the new image with fade-in effect
-function showNewPhoto(imgElement, photoUrl, photo) {
-  console.log("📥 Loading new image...");
+function showNewPhoto(imgElement, photo) {
+  console.log("📥 Displaying new image...");
   revealContent(); // Hide skeleton and show real content containers
 
   const flickrPhotoUrl = `https://www.flickr.com/photos/${photo.owner}/${photo.id}`;
 
   const photoContainer = document.getElementById('photo-info');
+  // Clear previous content and add new info
   photoContainer.innerHTML = `
-    <p><strong>Author:</strong> <a href="${flickrPhotoUrl}" target="_blank">${photo.ownername} <i class="bi bi-box-arrow-up-right"></i></a></p>
+    <p><strong>Author:</strong> <a href="${flickrPhotoUrl}" target="_blank" rel="noopener noreferrer">${photo.ownername} <i class="bi bi-box-arrow-up-right"></i></a></p>
   `;
 
-  // Start with the image hidden
-  imgElement.classList.add("hidden");
   photoContainer.appendChild(imgElement);
 
-  // Force a reflow and apply fade-in
-  imgElement.offsetHeight; // Force reflow
+  // Force a reflow to ensure the transition is applied correctly
+  void imgElement.offsetWidth;
+
+  // Apply the fade-in effect
   imgElement.classList.remove("hidden");
   imgElement.classList.add("fade-in");
 }
 
 // Load a random photo when the page loads for the first time
 window.onload = () => {
-  requestAnimationFrame(() => {
-    getRandomPhoto();
-  });
+  // Check if API keys are present before making the first call
+  if (!flickrApiKey || !flickrGroupId) {
+    console.error("🔴 Flickr API Key or Group ID is missing. Check your config.js file.");
+    // Optionally, display an error message to the user on the page
+    document.getElementById('info').innerHTML = `
+      <h1>Configuration Error</h1>
+      <p>Flickr API Key or Group ID is missing. Please check the console for details.</p>
+    `;
+    document.querySelector('.skeleton-loader').style.display = 'none';
+    loadButton.disabled = true;
+    return;
+  }
+  requestAnimationFrame(getRandomPhoto);
 };
 
 // Event listener for the button
-document.getElementById('load-photo').addEventListener('click', getRandomPhoto);
+loadButton.addEventListener('click', getRandomPhoto);
 
 // Dark mode toggle functionality with icon swap
 const toggleButton = document.getElementById('toggle-dark-mode');
 toggleButton.addEventListener('click', function() {
   document.body.classList.toggle('dark-mode');
-  if (document.body.classList.contains('dark-mode')) {
-    toggleButton.innerHTML = '<i class="bi bi-sun"></i>';
-  } else {
-    toggleButton.innerHTML = '<i class="bi bi-moon"></i>';
-  }
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  toggleButton.innerHTML = isDarkMode ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
 });
 
 // Keyboard navigation: Spacebar or Enter to load the next photo
 document.addEventListener('keydown', (event) => {
-  const loadButton = document.getElementById('load-photo');
-
-  // If the key press is on the load button itself, let the browser handle the native click event.
-  // This prevents the function from firing twice (once on keydown, once on click).
-  if ((event.key === ' ' || event.key === 'Enter') && document.activeElement === loadButton) {
-    return;
-  }
-
   // Do nothing if a photo is already being loaded.
   if (loadButton.disabled) {
     return;
   }
 
-  // Do not interfere with other interactive elements like links or the theme toggle button.
-  if (document.activeElement.tagName === 'A' || document.activeElement.id === 'toggle-dark-mode') {
-    return;
+  // If the key press is on an interactive element, let it be.
+  const activeElement = document.activeElement;
+  if (activeElement && (activeElement.tagName === 'A' || activeElement.tagName === 'BUTTON')) {
+    // Allow space/enter to work on the focused button
+    if (activeElement === loadButton && (event.key === ' ' || event.key === 'Enter')) {
+      // The default click event will handle it, no need to do anything here.
+      return;
+    } else {
+      // Don't interfere with other buttons or links
+      return;
+    }
   }
 
   // If the spacebar or enter key is pressed globally, trigger the photo load.
