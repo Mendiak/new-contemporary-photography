@@ -15,6 +15,8 @@
   --footer-text-color: #666;
   --toggle-bg-color: #f0f0f0;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  --skeleton-bg-color: #e0e0e0;
+  --skeleton-pulse-color: #d0d0d0;
 }
 
 /* Global box-sizing */
@@ -30,9 +32,11 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 20px 0;
 }
 
 /* Main container */
@@ -44,7 +48,7 @@ main.container {
   border-radius: 5px;
   box-shadow: 0 5px 15px var(--shadow-color);
   transition: width 0.6s ease-in-out, height 0.6s ease-in-out;
-  min-height: 600px; 
+  min-height: 700px; 
   width: 800px;
   margin: 15px;
   padding: 20px 5%;
@@ -108,13 +112,14 @@ a:visited {
 /* Image styles and transitions */
 img {
   max-width: 100%;
-  max-height: 400px;
+  max-height: 500px;
   width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   object-fit: contain;
   transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  margin: 20px 0;
 
 }
 
@@ -136,8 +141,8 @@ img {
 
 /* Portfolio Link */
 footer.portfolio-link {
-  margin-top: auto;
-  padding-top: 20px;
+  /* Moved outside the main container, so margin-top: auto is no longer needed */
+  margin-top: 20px;
   font-size: 12px;
   text-align: center;
   font-family: var(--font-primary);
@@ -147,11 +152,33 @@ footer.portfolio-link p {
   color: var(--footer-text-color);
 }
 
+/* Keyboard shortcut hint */
+.keyboard-hint {
+  font-family: var(--font-primary);
+  font-size: 11px;
+  color: var(--footer-text-color);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.keyboard-hint code {
+  background-color: #e9e9e9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  color: var(--text-color);
+}
+
+body.dark-mode .keyboard-hint code {
+  background-color: #444;
+  border-color: #555;
+}
+
 /* Responsive design */
 @media screen and (max-width: 1024px) {
   main.container {
     width: 90vw;
-    min-height: 500px;
+    min-height: 600px;
   }
   
   img {
@@ -163,7 +190,7 @@ footer.portfolio-link p {
 
 @media screen and (max-width: 768px) {
   main.container {
-    min-height: 400px;
+    min-height: 500px;
     padding: 20px 15px;
   }
 
@@ -174,7 +201,7 @@ footer.portfolio-link p {
 
 @media screen and (max-width: 480px) {
   main.container {
-    min-height: 300px;
+    min-height: 400px;
   }
   
   h1 {
@@ -196,6 +223,8 @@ body.dark-mode {
   --footer-text-color: #a0a0a0;
   --toggle-bg-color: #333333;
   --shadow-color: rgba(255, 255, 255, 0);
+  --skeleton-bg-color: #333;
+  --skeleton-pulse-color: #444;
 }
 
 /* This rule is needed because the base 'a' color is overridden by the general text color in dark mode */
@@ -227,7 +256,7 @@ body.dark-mode #toggle-dark-mode {
   transition: background-color 0.3s ease-in-out;
 }
 
-/* Añadir al final del archivo styles.css */
+/* Loading state for the button */
 button.loading {
   background-color: #a0a0a0;
   cursor: wait;
@@ -245,4 +274,38 @@ button.loading::after {
 
 body.dark-mode button.loading {
   background-color: #444444;
+}
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background-color: var(--skeleton-bg-color);
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+  width: 70%;
+  height: 1em;
+  margin-bottom: 0.75em;
+}
+
+.skeleton-text:last-child {
+  width: 50%;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 500px; /* Match image max-height */
+  margin-top: 15px;
+}
+
+@keyframes pulse {
+  0% { background-color: var(--skeleton-bg-color); }
+  50% { background-color: var(--skeleton-pulse-color); }
+  100% { background-color: var(--skeleton-bg-color); }
+}
+
+/* Initially hide content that will be loaded */
+.content {
+  display: none;
 }
