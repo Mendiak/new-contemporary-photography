@@ -148,22 +148,25 @@ function showNewPhoto(imgElement, photo) {
   imgElement.classList.add("fade-in");
 }
 
-// Load a random photo when the page loads for the first time
-window.onload = () => {
+function main() {
   // Check if API keys are present before making the first call
   if (!flickrApiKey || !flickrGroupId) {
     console.error("🔴 Flickr API Key or Group ID is missing. Check your config.js file.");
     // Optionally, display an error message to the user on the page
     document.getElementById('info').innerHTML = `
       <h1>Configuration Error</h1>
-      <p>Flickr API Key or Group ID is missing. Please check the console for details.</p>
+      <p>Flickr API Key or Group ID is missing. The application cannot be initialized.</p>
     `;
     document.querySelector('.skeleton-loader').style.display = 'none';
     loadButton.disabled = true;
     return;
   }
-  requestAnimationFrame(getRandomPhoto);
-};
+  getRandomPhoto();
+}
+
+// Load a random photo when the DOM is ready
+// Using DOMContentLoaded is slightly more efficient than window.onload
+document.addEventListener('DOMContentLoaded', main);
 
 // Event listener for the button
 loadButton.addEventListener('click', getRandomPhoto);
