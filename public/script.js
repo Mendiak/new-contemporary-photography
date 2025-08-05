@@ -175,8 +175,10 @@ loadButton.addEventListener('click', getRandomPhoto);
 const toggleButton = document.getElementById('toggle-dark-mode');
 toggleButton.addEventListener('click', function() {
   document.body.classList.toggle('dark-mode');
-  const isDarkMode = document.body.classList.contains('dark-mode');
-  toggleButton.innerHTML = isDarkMode ? '<i class="bi bi-sun"></i>' : '<i class="bi bi-moon"></i>';
+  // More efficient: just toggle the icon class
+  const icon = toggleButton.querySelector('i');
+  icon.classList.toggle('bi-moon');
+  icon.classList.toggle('bi-sun');
 });
 
 // Keyboard navigation: Spacebar or Enter to load the next photo
@@ -186,20 +188,11 @@ document.addEventListener('keydown', (event) => {
     return;
   }
 
-  // If the key press is on an interactive element, let it be.
-  const activeElement = document.activeElement;
-  if (activeElement && (activeElement.tagName === 'A' || activeElement.tagName === 'BUTTON')) {
-    // Allow space/enter to work on the focused button
-    if (activeElement === loadButton && (event.key === ' ' || event.key === 'Enter')) {
-      // The default click event will handle it, no need to do anything here.
-      return;
-    } else {
-      // Don't interfere with other buttons or links
-      return;
-    }
+  // Only trigger if the user is not typing in an input field (for future-proofing)
+  if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+    return;
   }
 
-  // If the spacebar or enter key is pressed globally, trigger the photo load.
   if (event.key === ' ' || event.key === 'Enter') {
     event.preventDefault(); // Prevent scrolling or other default actions.
     loadButton.click();
