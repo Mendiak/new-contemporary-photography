@@ -76,6 +76,8 @@ header#info {
 /* Interactive elements */
 button {
   padding: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   font-size: 12px;
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
