@@ -4,7 +4,7 @@
   --font-fallback: Arial, sans-serif;
 
   /* Light Mode Colors */
-  --bg-color: lightgrey;
+  --bg-color: #ffffff; /* Changed from lightgrey to white for the pattern */
   --container-bg-color: white;
   --text-color: #333;
   --link-color: #000000;
@@ -17,6 +17,7 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
   --skeleton-bg-color: #e0e0e0;
   --skeleton-pulse-color: #d0d0d0;
+  --button-glow-color: rgba(88, 88, 88, 0.4);
 }
 
 /* Global box-sizing */
@@ -27,7 +28,13 @@
 /* General styles */
 body {
   font-family: var(--font-fallback);
-  background: var(--bg-color);
+  background-color: var(--bg-color);
+  /* Adding the background pattern for light mode */
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(75, 85, 99, 0.08) 20px, rgba(75, 85, 99, 0.08) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(107, 114, 128, 0.06) 30px, rgba(107, 114, 128, 0.06) 31px),
+    repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(55, 65, 81, 0.05) 40px, rgba(55, 65, 81, 0.05) 41px),
+    repeating-linear-gradient(150deg, transparent, transparent 35px, rgba(31, 41, 55, 0.04) 35px, rgba(31, 41, 55, 0.04) 36px);
   color: var(--text-color);
   margin: 0;
   padding: 0;
@@ -73,6 +80,42 @@ header#info {
   font-size: 12px;
 }
 
+.separator {
+  margin: 0 8px;
+  color: var(--footer-text-color);
+}
+
+.download-link i {
+  font-size: 0.9em; /* Make the icon slightly smaller */
+  vertical-align: -0.05em; /* Align icon better with text */
+}
+
+.copy-link-button {
+  display: inline-block;
+  background-color: var(--skeleton-bg-color);
+  border: 1px solid var(--skeleton-pulse-color);
+  color: var(--text-color);
+  padding: 2px 8px;
+  font-size: 0.9em;
+  border-radius: 12px; /* Pill shape */
+  margin-left: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-link-button:hover {
+  background-color: var(--skeleton-pulse-color);
+  text-decoration: none;
+}
+
+.copy-link-button.copied, .copy-link-button.disabled {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+  cursor: default;
+}
 /* Interactive elements */
 button {
   padding: 10px 20px;
@@ -84,12 +127,17 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.1s ease;
   font-family: var(--font-primary);
 }
 
 button:hover {
   background-color: #000000;
+}
+
+button:active {
+  transform: scale(0.97);
+  filter: brightness(0.9);
 }
 
 button:disabled {
@@ -120,7 +168,8 @@ img {
   flex-direction: column;
   align-items: center;
   object-fit: contain;
-  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+  /* Add filter to the transition for the blur effect */
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, filter 0.8s ease-in-out;
   margin: 20px 0;
 
 }
@@ -129,6 +178,7 @@ img {
 .hidden {
   opacity: 0;
   transform: scale(0.95);
+  filter: blur(20px); /* Start blurred */
 }
 
 .fade-out {
@@ -139,8 +189,22 @@ img {
 .fade-in {
   opacity: 1;
   transform: scale(1);
+  filter: blur(0px); /* Unblur on fade-in */
 }
 
+/* Subtle glow animation to draw attention to the button */
+@keyframes subtle-border-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: 0 0 8px 3px var(--button-glow-color);
+  }
+}
+
+button.prompt-attention {
+  animation: subtle-border-glow 2s ease-in-out;
+}
 /* Portfolio Link */
 footer.portfolio-link {
   /* Moved outside the main container, so margin-top: auto is no longer needed */
@@ -176,6 +240,22 @@ body.dark-mode .keyboard-hint code {
   border-color: #555;
 }
 
+body.dark-mode .copy-link-button {
+  background-color: #333;
+  border-color: #444;
+  color: var(--text-color);
+}
+
+body.dark-mode .copy-link-button:hover {
+  background-color: #444;
+}
+
+body.dark-mode .copy-link-button.copied,
+body.dark-mode .copy-link-button.disabled {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  color: white;
+}
 /* Responsive design */
 @media screen and (max-width: 1024px) {
   main.container {
@@ -227,6 +307,14 @@ body.dark-mode {
   --shadow-color: rgba(255, 255, 255, 0);
   --skeleton-bg-color: #333;
   --skeleton-pulse-color: #444;
+  --button-glow-color: rgba(187, 134, 252, 0.4); /* Use a theme color for the glow */
+
+  /* Inverted background pattern for dark mode */
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(230, 230, 240, 0.07) 20px, rgba(230, 230, 240, 0.07) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(230, 230, 240, 0.05) 30px, rgba(230, 230, 240, 0.05) 31px),
+    repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(230, 230, 240, 0.05) 40px, rgba(230, 230, 240, 0.05) 41px),
+    repeating-linear-gradient(150deg, transparent, transparent 35px, rgba(230, 230, 240, 0.04) 35px, rgba(230, 230, 240, 0.04) 36px);
 }
 
 /* This rule is needed because the base 'a' color is overridden by the general text color in dark mode */
@@ -255,7 +343,7 @@ body.dark-mode #toggle-dark-mode {
   z-index: 1000;
   cursor: pointer;
   color: inherit;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.1s ease;
 }
 
 /* Loading state for the button */
