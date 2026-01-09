@@ -1,80 +1,67 @@
-# New Contemporary Photography
+# New Contemporary Photography 📸
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=flat-square)](https://new-contemporary-photography.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-orange?style=for-the-badge)](https://new-contemporary-photography.vercel.app/)
 
-A simple and elegant web application that showcases a random, beautiful image from the [New Contemporary Photography](https://www.flickr.com/groups/newcontemporaryphotography/) Flickr group.
+A premium, high-contrast photography showcase built to celebrate the incredible art of the [New Contemporary Photography](https://www.flickr.com/groups/newcontemporaryphotography/) Flickr group. 
 
-![Screenshot of the New Contemporary Photography website](https://new-contemporary-photography.vercel.app/assets/screenshot.jpg)
+This application has been redesigned with a "brutalist" flat aesthetic, prioritizing visual impact and immersive photography discovery.
+
+![Screenshot](https://new-contemporary-photography.vercel.app/assets/screenshot.jpg)
+
+## 🎨 Design Philosophy
+
+- **High-Contrast Brutalism**: Solid charcoal surfaces, sharp 4px borders, and vibrant accents (Safety Orange/Electric Blue).
+- **Photography First**: Images are presented in a dedicated black box to maintain focus across all aspect ratios.
+- **Micro-Animations**: Snappy transitions and progress indicators for a premium feel.
+- **Zero Transparency**: Optimized for clarity with solid backgrounds that prevent grid bleed.
 
 ## ✨ Features
 
-*   **Random Photo Discovery**: Fetches a random photo from a pool of thousands in the Flickr group with a single click.
-*   **Author Attribution**: Displays the photographer's name and provides a direct link to the original photo on Flickr.
-*   **Smooth Transitions**: Enjoy seamless and elegant fade-in/fade-out animations when loading new images.
-*   **Dark & Light Modes**: A sleek toggle to switch between a light and dark theme for comfortable viewing in any lighting condition.
-*   **Responsive Design**: A fully responsive layout that looks great on desktops, tablets, and mobile devices.
-*   **Loading State**: The "Next Photo" button provides visual feedback while a new image is being fetched and loaded.
+- **🚀 Auto-play Mode**: An immersive slideshow that automatically cycles through curated photography.
+- **🖥️ Fullscreen Mode**: Expand your experience to the entire screen for maximum focus.
+- **🔗 Shareable Title**: Click the page title to instantly copy the production URL (`https://new-contemporary-photography.vercel.app/`).
+- **📊 Real-time Progress**: A visual loading bar tracks photo prefetching and display status.
+- **🌓 Adaptive Theming**: Seamlessly switch between light and dark modes optimized for high-contrast viewing.
 
 ## 🛠️ Technologies Used
 
-This project is built with vanilla web technologies, keeping it lightweight and fast.
+- **Vanilla JavaScript (ES6+)**: Light, fast, and dependency-free core logic.
+- **Modern CSS**: Using HSL variables, sharp layout tokens, and refined typography (IBM Plex Mono).
+- **Flickr API**: Powering the discovery engine from a pool of thousands of curated works.
+- **Bootstrap Icons**: Minimalist iconography for UI controls.
 
-*   **HTML5**: For the core structure and content.
-*   **CSS3**: For styling, including CSS Variables for theming, Flexbox for layout, and transitions for animations.
-*   **JavaScript (ES6+)**: For all the dynamic functionality, including API calls and DOM manipulation.
-*   **[Flickr API](https://www.flickr.com/services/api/)**: Used to fetch photo data from the public group pool.
-*   **[Axios](https://axios-http.com/)**: A promise-based HTTP client for making requests to the Flickr API.
-*   **[Bootstrap Icons](https://icons.getbootstrap.com/)**: For the shuffle and theme-toggle icons.
+## 🚀 Development
 
-## 🚀 Getting Started
+### Prerequisites
 
-To run this project locally, follow these steps:
+1.  **Flickr API Key**: Obtain one [here](https://www.flickr.com/services/apps/create/apply/).
+2.  **Group ID**: The project uses `34427469792@N01`.
 
-1.  **Clone the repository:**
+### Local Setup
+
+1.  **Clone the project**:
     ```bash
     git clone https://github.com/your-username/new-contemporary-photography.git
     cd new-contemporary-photography
     ```
 
-2.  **Get a Flickr API Key:**
-    *   You will need an API key from Flickr to make requests. You can apply for one [here](https://www.flickr.com/services/apps/create/apply/).
-    *   You will also need the ID of the Flickr group. For this project, it is `34427469792@N01`.
-
-3.  **Create a `config.js` file:**
-    In the root of the project, create a new file named `config.js` and add your Flickr API key and Group ID to it, like so:
-
+2.  **Environment Configuration**: 
+    Create a `config.js` in the root (this file is gitignored):
     ```javascript
-    // c:\Users\mikel\Desktop\VS Code\new-contemporary-photography\config.js
     window.ENV = {
-      NEXT_PUBLIC_FLICKR_API_KEY: 'YOUR_FLICKR_API_KEY_HERE',
+      NEXT_PUBLIC_FLICKR_API_KEY: 'YOUR_KEY_HERE',
       NEXT_PUBLIC_FLICKR_GROUP_ID: '34427469792@N01'
     };
     ```
-    > **Note:** This file is included in `.gitignore` to prevent API keys from being committed to version control.
 
-4.  **Open `index.html`:**
-    Simply open the `index.html` file in your web browser to see the application in action. No local server is required.
+3.  **Run**: Open `index.html` in any modern browser.
 
-## 📂 File Structure
+## 🙏 Dedication
 
-```
-new-contemporary-photography/
-├── assets/
-│   └── screenshot.jpg
-├── .gitignore
-├── config.js           # (You need to create this)
-├── favicon.png
-├── index.html
-├── README.md
-├── script.js
-└── styles.css
-```
+> "Web desarrollada en homenaje a los grandes trabajos fotográficos de este grupo y a todo lo aprendido gracias a ellos en mis años en Flickr."
 
-## 🙏 Acknowledgements
-
-*   A huge thank you to all the talented photographers in the New Contemporary Photography group on Flickr for sharing their incredible work.
-*   This project is a tribute to their art and a way to discover new perspectives in photography.
+This project is a personal tribute to the photographers who have inspired my journey. Every image discovered here is a testament to the community's collective vision.
 
 ---
 
-*This project was created by Mikel Aramendia.*
+*Redesigned and maintained by Mikel Aramendia.*
