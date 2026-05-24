@@ -306,6 +306,17 @@ footer.portfolio-link {
   background: var(--bg-color);
 }
 
+.bmc-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.bmc-button {
+  transform: scale(0.85);
+  transform-origin: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   main.container {
