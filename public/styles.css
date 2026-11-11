@@ -522,10 +522,13 @@ main.is-ready .skeleton-loader {
   }
 
   body {
+    padding: var(--space-3) var(--space-3) 0;
+  }
+
+  body.viewer-page {
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
-    padding: var(--space-3) var(--space-3) 0;
   }
 
   main.viewer {
