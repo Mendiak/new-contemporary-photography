@@ -136,6 +136,7 @@ function pageFooter() {
   return `  <footer class="site-footer">
     <p>
       Website by <a href="https://mendiak.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Mikel Aramendia</a> ·
+      <a href="https://www.flickr.com/photos/mikelaramendia/" target="_blank" rel="noopener noreferrer">Flickr</a> ·
       <a href="/archive/">Archive</a> ·
       <a href="/about/">About</a> ·
       <a href="https://github.com/Mendiak/new-contemporary-photography" target="_blank" rel="noopener noreferrer">GitHub</a> ·
@@ -409,6 +410,7 @@ function renderAboutPage(latestDate) {
           url: 'https://mendiak.github.io/portfolio/',
           sameAs: [
             'https://github.com/Mendiak',
+            'https://www.flickr.com/photos/mikelaramendia/',
             'https://mendiak.github.io/portfolio/',
           ],
           jobTitle: 'Group admin',
@@ -451,6 +453,10 @@ function renderAboutPage(latestDate) {
         <div>
           <dt>Curated by</dt>
           <dd><a href="https://mendiak.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Mikel Aramendia</a>, group admin</dd>
+        </div>
+        <div>
+          <dt>Flickr</dt>
+          <dd><a href="https://www.flickr.com/photos/mikelaramendia/" target="_blank" rel="noopener noreferrer">mikelaramendia</a></dd>
         </div>
         <div>
           <dt>Last archive update</dt>

@@ -142,6 +142,6 @@ A personal tribute to the photographers who inspired my journey.
 
 ## Credits
 
-Designed and maintained by [Mikel Aramendia](https://mendiak.github.io/portfolio/), group admin. Photographs belong to their respective authors and are linked back to their original Flickr pages.
+Designed and maintained by [Mikel Aramendia](https://mendiak.github.io/portfolio/), group admin. Find his photography on [Flickr](https://www.flickr.com/photos/mikelaramendia/). Photographs belong to their respective authors and are linked back to their original Flickr pages.
 
 If you enjoy the project, you can [buy me a coffee](https://buymeacoffee.com/Mendiak).
