@@ -201,6 +201,10 @@ function getPermalinkPhotoId() {
   }
 }
 
+function buildPhotoPageUrl(photoId) {
+  return `${SITE_URL}photo/${encodeURIComponent(photoId)}/`;
+}
+
 function buildPhotoPermalink(photoId) {
   const url = new URL(window.location.href);
   url.hash = '';
@@ -346,7 +350,7 @@ async function showPhoto({ photo, img, photoUrl, via = 'random' }) {
   revealContent();
   await swapImage(img);
 
-  const sitePhotoUrl = buildPhotoPermalink(photo.id);
+  const sitePhotoUrl = buildPhotoPageUrl(photo.id);
   updatePhotoPermalink(photo.id);
   renderPhotoInfo(photo, photoUrl, sitePhotoUrl);
 
@@ -398,7 +402,7 @@ async function copyPhotoLink(button, url, photoId) {
   const copied = await copyText(url);
 
   trackEvent('copy_link', {
-    target: 'site_photo',
+    target: 'site_photo_page',
     photo_id: photoId,
     success: copied,
   });
