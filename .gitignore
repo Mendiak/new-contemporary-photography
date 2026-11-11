@@ -1,5 +1,25 @@
-.env.local
-.env.*.local
+# Dependencies
+node_modules/
+
+# Generated config (Flickr credentials)
 config.js
-node_modules
-.vercel
+.env*
+!.env.example
+
+# Vercel
+.vercel/
+
+# Local AI agent tooling and installed skills
+.agents/
+skills-lock.json
+.opencode/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

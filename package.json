@@ -1,24 +1,28 @@
 {
   "name": "new-contemporary-photography",
-  "version": "1.0.0",
-  "description": "[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=flat-square)](https://new-contemporary-photography.vercel.app/)",
-  "main": "index.js",
+  "version": "1.1.0",
+  "description": "A quiet photography showcase for the New Contemporary Photography Flickr group.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "config": "node --env-file-if-exists=.env.local generate-config.js",
+    "build": "node --env-file-if-exists=.env.local generate-config.js",
+    "dev": "npm run config && node dev-server.js",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mendiak/new-contemporary-photography.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "photography",
+    "flickr",
+    "gallery"
+  ],
+  "author": "Mikel Aramendia",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Mendiak/new-contemporary-photography/issues"
   },
-  "homepage": "https://github.com/Mendiak/new-contemporary-photography#readme",
-  "dependencies": {
-    "dotenv": "^17.2.1"
-  }
+  "homepage": "https://github.com/Mendiak/new-contemporary-photography#readme"
 }
