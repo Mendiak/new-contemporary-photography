@@ -1,0 +1,240 @@
+/* Static archive and photo pages ------------------------------------------- */
+
+.static-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-2) clamp(16px, 4vw, 32px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.static-brand {
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.static-brand:hover {
+  color: var(--accent);
+}
+
+.static-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.static-nav a {
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+
+.static-nav a:hover {
+  color: var(--accent);
+}
+
+.static-main {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 32px) 64px;
+}
+
+.static-eyebrow {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Photo detail page -------------------------------------------------------- */
+
+.photo-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.8fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.photo-page-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: clamp(16px, 3vw, 32px);
+  background-color: var(--mat);
+  border: 1px solid var(--mat-rule);
+}
+
+.photo-page-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 78vh;
+  object-fit: contain;
+}
+
+.photo-page-info h1 {
+  margin: var(--space-1) 0 0;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+
+.photo-byline {
+  margin: var(--space-1) 0 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.photo-facts {
+  margin: var(--space-4) 0 0;
+}
+
+.photo-facts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.photo-facts dt {
+  color: var(--ink-muted);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.photo-facts dd {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.static-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-4);
+}
+
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.link-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.link-button.primary {
+  background-color: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface);
+}
+
+.link-button.primary:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* Archive ------------------------------------------------------------------ */
+
+.archive-header {
+  max-width: 680px;
+}
+
+.archive-header h1 {
+  margin: var(--space-1) 0 0;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.archive-intro {
+  margin: var(--space-2) 0 var(--space-3);
+  max-width: 56ch;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.archive-card a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.archive-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background-color: var(--mat);
+  border: 1px solid var(--mat-rule);
+  transition: border-color var(--transition);
+}
+
+.archive-card a:hover img {
+  border-color: var(--accent);
+}
+
+.archive-card h2 {
+  margin: var(--space-1) 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.archive-card p {
+  margin: 2px 0 0;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 860px) {
+  .photo-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .photo-page-figure img {
+    max-height: 70vh;
+  }
+}

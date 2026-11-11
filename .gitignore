@@ -6,6 +6,11 @@ config.js
 .env*
 !.env.example
 
+# Generated at build time
+public/archive/
+public/photo/
+public/sitemap.xml
+
 # Vercel
 .vercel/
 

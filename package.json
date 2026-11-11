@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "config": "node --env-file-if-exists=.env.local generate-config.js",
-    "build": "node --env-file-if-exists=.env.local generate-config.js",
-    "dev": "npm run config && node dev-server.js",
+    "pages": "node --env-file-if-exists=.env.local generate-pages.js",
+    "build": "node --env-file-if-exists=.env.local generate-config.js && node --env-file-if-exists=.env.local generate-pages.js",
+    "dev": "npm run config && npm run pages && node dev-server.js",
     "start": "npm run dev"
   },
   "repository": {

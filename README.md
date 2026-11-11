@@ -19,7 +19,9 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
 
 - **Desktop viewer** — photograph stage plus a metadata sidebar, sized to the viewport with no page scrolling for portrait or landscape images.
 - **Mobile-first layout** — a single column that keeps the photograph, credit, and controls readable on small screens.
-- **Photo permalinks** — `?photo=ID` URLs that can be shared, bookmarked, and reopened.
+- **Photo permalinks** — `?photo=ID` URLs that open that exact image in the viewer.
+- **Static photo pages** — generated `/photo/{id}/` pages with title, photographer, original Flickr link and structured data.
+- **Archive** — a browsable `/archive/` grid of selected photographs that links to each static page.
 - **Auto-play** — cycles through the pool every 10 seconds.
 - **Fullscreen mode** — a distraction-free view of the current photograph.
 - **Light and dark themes** — follows the system preference by default, remembers the visitor's choice.
@@ -67,17 +69,19 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
    npm run dev
    ```
 
-   The dev script generates `public/config.js` from `.env.local` and serves the site at [http://localhost:3000](http://localhost:3000).
+   The dev script generates `public/config.js` and the static photo/archive pages from `.env.local`, then serves the site at [http://localhost:3000](http://localhost:3000).
 
 ### Available scripts
 
 | Script | Description |
 | --- | --- |
-| `npm run dev` | Generate `public/config.js` and start the local server on port 3000 |
+| `npm run dev` | Generate config and pages, then start the local server on port 3000 |
 | `npm run config` | Generate `public/config.js` only |
+| `npm run pages` | Generate `/archive/`, `/photo/{id}/` and the sitemap |
+| `npm run build` | Generate config and pages (used by Vercel) |
 | `npm start` | Alias for `npm run dev` |
 
-> The project has no runtime dependencies: the local server (`dev-server.js`) and the config generator use only Node.js built-ins.
+> The project has no runtime dependencies: the local server, the config generator and the page generator use only Node.js built-ins. Use `PAGES_PHOTO_COUNT` to change how many photo pages are generated (default: 60).
 
 ## Project Structure
 
@@ -86,16 +90,21 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
 ├── public/
 │   ├── index.html        # Markup, metadata and structured data
 │   ├── styles.css        # Design tokens, viewer grid and responsive rules
+│   ├── pages.css         # Static archive and photo page layout
 │   ├── script.js         # Flickr API, viewer, permalinks and GA4 events
+│   ├── static.js         # Theme handling for the static pages
 │   ├── robots.txt
-│   ├── sitemap.xml
 │   ├── favicon.png
 │   └── assets/
 │       └── screenshot.jpg
 ├── assets/screenshot.jpg # Screenshot used by the README
 ├── dev-server.js         # Zero-dependency local static server
-└── generate-config.js    # Writes public/config.js from environment variables
+├── generate-config.js    # Writes public/config.js from environment variables
+└── generate-pages.js     # Generates /archive/, /photo/{id}/ and sitemap.xml
 ```
+
+The `public/archive/`, `public/photo/` and `public/sitemap.xml` files are
+generated at build time and are not committed.
 
 ## Deployment
 
@@ -108,14 +117,15 @@ NEXT_PUBLIC_FLICKR_API_KEY
 NEXT_PUBLIC_FLICKR_GROUP_ID
 ```
 
-The build step runs `node generate-config.js`, which writes the credentials to `public/config.js` before deployment.
+The build step runs `npm run build`, which writes the credentials to `public/config.js` and generates the archive, photo pages and sitemap before deployment.
 
 ## Analytics and SEO
 
 - **Google Analytics 4** (`G-EDG153PWJP`) receives custom events for the viewer interactions listed above.
 - **Search Console** can verify the site through the existing meta tag.
-- `public/robots.txt` and `public/sitemap.xml` are included for crawlers.
-- Each photograph is shareable through its `?photo=ID` permalink; the canonical URL remains the site root.
+- The generated `sitemap.xml` includes the archive and every photo page, plus an image sitemap for Google Images.
+- Static `/photo/{id}/` pages carry unique titles, descriptions, canonical URLs and `Photograph` structured data.
+- The viewer keeps `?photo=ID` permalinks for sharing, while the canonical URL of each shared image remains its static photo page.
 
 ## Dedication
 
