@@ -9,6 +9,7 @@ config.js
 # Generated at build time
 public/archive/
 public/photo/
+public/about/
 public/sitemap.xml
 
 # Vercel

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /*?photo=
 
 Sitemap: https://new-contemporary-photography.vercel.app/sitemap.xml

@@ -20,8 +20,10 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
 - **Desktop viewer** — photograph stage plus a metadata sidebar, sized to the viewport with no page scrolling for portrait or landscape images.
 - **Mobile-first layout** — a single column that keeps the photograph, credit, and controls readable on small screens.
 - **Photo permalinks** — `?photo=ID` URLs that open that exact image in the viewer.
-- **Static photo pages** — generated `/photo/{id}/` pages with title, photographer, original Flickr link and structured data.
-- **Archive** — a browsable `/archive/` grid of selected photographs that links to each static page.
+- **Static photo pages** — generated `/photo/{id}/` pages with title, photographer, description, tags, original Flickr link and structured data.
+- **Stable archive** — a curated `photo-manifest.json` with 195 photographs, paginated at `/archive/`, so indexed URLs do not disappear between builds.
+- **Photo context** — breadcrumbs, previous/next navigation, capture details and Flickr tags on every photo page.
+- **About page** — `/about/` with the group story, curation approach and `Person` structured data.
 - **Auto-play** — cycles through the pool every 10 seconds.
 - **Fullscreen mode** — a distraction-free view of the current photograph.
 - **Light and dark themes** — follows the system preference by default, remembers the visitor's choice.
@@ -77,11 +79,12 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
 | --- | --- |
 | `npm run dev` | Generate config and pages, then start the local server on port 3000 |
 | `npm run config` | Generate `public/config.js` only |
-| `npm run pages` | Generate `/archive/`, `/photo/{id}/` and the sitemap |
+| `npm run curate` | Fetch recent photos and merge them into `photo-manifest.json` |
+| `npm run pages` | Generate `/archive/`, `/about/`, `/photo/{id}/` and the sitemap from the manifest |
 | `npm run build` | Generate config and pages (used by Vercel) |
 | `npm start` | Alias for `npm run dev` |
 
-> The project has no runtime dependencies: the local server, the config generator and the page generator use only Node.js built-ins. Use `PAGES_PHOTO_COUNT` to change how many photo pages are generated (default: 60).
+> The project has no runtime dependencies: all scripts use only Node.js built-ins. The archive is built from `photo-manifest.json`; run `npm run curate` when you want to add new photographs.
 
 ## Project Structure
 
@@ -100,11 +103,14 @@ Every photograph has a permalink (`?photo=ID`), so a shared link opens that exac
 ├── assets/screenshot.jpg # Screenshot used by the README
 ├── dev-server.js         # Zero-dependency local static server
 ├── generate-config.js    # Writes public/config.js from environment variables
-└── generate-pages.js     # Generates /archive/, /photo/{id}/ and sitemap.xml
+├── generate-pages.js     # Generates /archive/, /about/, /photo/{id}/ and sitemap.xml
+├── curate-photos.js      # Merges recent Flickr photos into photo-manifest.json
+├── photo-data.js         # Shared photo size and metadata helpers
+└── photo-manifest.json   # Stable list of selected photographs
 ```
 
-The `public/archive/`, `public/photo/` and `public/sitemap.xml` files are
-generated at build time and are not committed.
+The `public/archive/`, `public/photo/`, `public/about/` and `public/sitemap.xml`
+files are generated at build time and are not committed.
 
 ## Deployment
 
@@ -117,15 +123,16 @@ NEXT_PUBLIC_FLICKR_API_KEY
 NEXT_PUBLIC_FLICKR_GROUP_ID
 ```
 
-The build step runs `npm run build`, which writes the credentials to `public/config.js` and generates the archive, photo pages and sitemap before deployment.
+The build step runs `npm run build`, which writes the credentials to `public/config.js` and generates the archive, about page, photo pages and sitemap from `photo-manifest.json` before deployment. To add new photographs, run `npm run curate` locally and commit the updated manifest.
 
 ## Analytics and SEO
 
-- **Google Analytics 4** (`G-EDG153PWJP`) receives custom events for the viewer interactions listed above.
+- **Google Analytics 4** (`G-EDG153PWJP`) is linked to Search Console and receives custom events for the viewer interactions listed above.
 - **Search Console** can verify the site through the existing meta tag.
-- The generated `sitemap.xml` includes the archive and every photo page, plus an image sitemap for Google Images.
-- Static `/photo/{id}/` pages carry unique titles, descriptions, canonical URLs and `Photograph` structured data.
-- The viewer keeps `?photo=ID` permalinks for sharing, while the canonical URL of each shared image remains its static photo page.
+- The generated `sitemap.xml` includes the archive pages, the about page and every photo page, plus an image sitemap with titles and captions.
+- Static `/photo/{id}/` pages carry unique titles, descriptions, canonical URLs, `Photograph` and `BreadcrumbList` structured data.
+- `photo-manifest.json` keeps photo URLs stable across builds, avoiding 404s after indexing.
+- The viewer keeps `?photo=ID` permalinks for sharing, while `robots.txt` disallows crawling those query variants; each shared image points to its static photo page.
 
 ## Dedication
 
